@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<!--数据库配置-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!--数据库驱动-->
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<!--数据库URL-->
+		<property name="url" value="jdbc:mysql://localhost:3306/GSYOA?characterEncoding=UTF-8"></property>
+	<!--数据库账号-->
+		<property name="username" value="root"></property>
+		<!--数据库密码-->
+		<property name="password" value="123456"></property>		
+	</bean>
+	<!--Hiberntae配置-->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource"/>
+		</property>
+		<!--映射配置-->
+		<!--<property name="mappingResources">-->
+		<property name="packagesToScan">
+			<list>
+				<value>com.gsyoa.entity</value>
+			</list>
+		</property>
+		<!--Hibernate参数配置-->
+		<property name="hibernateProperties">
+			<props>
+				<!--数据库方言-->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!--是否显示数据库sql语句-->
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- 自动建表 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
+	 
+<!--依赖注入-->
+	
+			<!-- 创建ApplyDAOImpl实例 -->
+	<bean id="applyDAO" class="com.gsyoa.dao.impl.ApplyDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="applyService" class="com.gsyoa.service.impl.ApplyServiceImpl">
+			<property name="applyDAO" ref="applyDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>
+		
+		<!-- 创建ArticleDAOImpl实例 -->
+	<bean id="articleDAO" class="com.gsyoa.dao.impl.ArticleDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="articleService" class="com.gsyoa.service.impl.ArticleServiceImpl">
+			<property name="articleDAO" ref="articleDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>
+		
+			<!-- 创建CheckDAOImpl实例 -->
+	<bean id="checkDAO" class="com.gsyoa.dao.impl.CheckDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="checkService" class="com.gsyoa.service.impl.CheckServiceImpl">
+			<property name="checkDAO" ref="checkDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>
+		
+	<!-- 创建DepartmentDAO实例 -->
+	<bean id="departmentDAO" class="com.gsyoa.dao.impl.DepartmentDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="departmentService" class="com.gsyoa.service.impl.DepartmentServiceImpl">
+			<property name="departmentDAO" ref="departmentDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>					
+			
+			<!-- 创建MessagesDAOImpl实例 -->
+	<bean id="messagesDAO" class="com.gsyoa.dao.impl.MessagesDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="messagesService" class="com.gsyoa.service.impl.MessagesServiceImpl">
+			<property name="messagesDAO" ref="messagesDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>	
+				
+			<!-- 创建PositionDAOImpl实例 -->
+	<bean id="positionDAO" class="com.gsyoa.dao.impl.PositionDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="positionService" class="com.gsyoa.service.impl.PositionServiceImpl">
+			<property name="positionDAO" ref="positionDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>					
+					
+			<!-- 创建SystemInfoDAOImpl实例 -->
+	<bean id="systemInfoDAO" class="com.gsyoa.dao.impl.SystemInfoDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="systemInfoService" class="com.gsyoa.service.impl.SystemInfoServiceImpl">
+			<property name="systemInfoDAO" ref="systemInfoDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>		
+							
+			<!-- 创建TypeDAOImpl实例 -->
+	<bean id="typeDAO" class="com.gsyoa.dao.impl.TypeDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="typeService" class="com.gsyoa.service.impl.TypeServiceImpl">
+			<property name="typeDAO" ref="typeDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>	
+	
+		<!-- 创建UserDao实例 -->
+		<bean id="userDAO" class="com.gsyoa.dao.impl.UserDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="userService" class="com.gsyoa.service.impl.UserServiceImpl">
+			<property name="userDAO" ref="userDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>
+	
+	
+			
+			<!-- 创建VoucherDAOImpl实例 -->
+	<bean id="voucherDAO" class="com.gsyoa.dao.impl.VoucherDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="voucherService" class="com.gsyoa.service.impl.VoucherServiceImpl">
+			<property name="voucherDAO" ref="voucherDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>	
+							
+			<!-- 创建VoucherInfoDAOImpl实例 -->
+		<bean id="voucherInfoDAO" class="com.gsyoa.dao.impl.VoucherInfoDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="voucherInfoService" class="com.gsyoa.service.impl.VoucherInfoServiceImpl">
+			<property name="voucherInfoDAO" ref="voucherInfoDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>		
+		
+		<!-- 创建VoucherInfoDAOImpl实例 -->
+		<bean id="messagesReplyDAO" class="com.gsyoa.dao.impl.MessagesReplyDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="messagesReplyService" class="com.gsyoa.service.impl.MessagesReplyServiceImpl">
+			<property name="messagesReplyDAO" ref="messagesReplyDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>		
+		
+		<!-- 创建conferenceDAO实例 -->
+		<bean id="conferenceDAO" class="com.gsyoa.dao.impl.ConferenceDAOImpl">
+			<property name="sessionFactory" ref="sessionFactory" /> 
+		</bean>
+		<bean id="conferenceService" class="com.gsyoa.service.impl.ConferenceServiceImpl">
+			<property name="conferenceDAO" ref="conferenceDAO"></property>	<!-- 注入DAO组件 -->
+		</bean>	
+	
+</beans>

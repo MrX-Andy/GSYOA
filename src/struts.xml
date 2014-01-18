@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />			<!-- 配置启动开发者模式 -->
+
+    <package name="default" namespace="/"  extends="struts-default">
+        <!-- 拦截器 -->
+	    <interceptors>
+				<interceptor name="login" class="com.gsyoa.interceptor.LoginInterceptor" />
+				<interceptor-stack name="mydefaultAdmin">
+					<interceptor-ref name="defaultStack" />
+					<interceptor-ref name="login" />
+				</interceptor-stack>
+		</interceptors>
+	    <default-interceptor-ref name="mydefaultAdmin"></default-interceptor-ref>
+    
+    
+     	<default-action-ref name="index" />		<!-- 配置默认的action -->
+        <global-results>
+            <result name="error"  type="redirectAction">index</result>		<!-- 配置默认的错误页 -->
+        </global-results>
+
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"/>		<!-- 配置异常-->
+        </global-exception-mappings>
+        
+        <!-- 登陆界面 -->
+		<action name="index" class="com.gsyoa.action.LoginAction" >
+			<interceptor-ref name="defaultStack"></interceptor-ref>	 <!-- 设置该方法不使用全局拦截器 -->
+            <result name="success">/login.jsp</result>
+        </action>
+        <action name="login" class="com.gsyoa.action.LoginAction"  method="login">
+        	<interceptor-ref name="defaultStack"></interceptor-ref>	 <!-- 设置该方法不使用全局拦截器 -->
+            <result name="message">/messagesInfo.jsp</result>
+            <result name="main" >/main.jsp</result>
+        </action>
+        
+        <!-- 信息处理 -->
+        <action name="Messages_*" class="com.gsyoa.action.MessagesAction"  method="{1}">
+            <result name="message">/messagesInfo.jsp</result>
+            <result name="list">/messages/receiveList.jsp</result>
+            <result name="reply">/messages/reply.jsp</result>
+        </action>
+        
+      <!-- 首页处理 -->
+      <action name="Main_*" class="com.gsyoa.action.MainAction"  method="{1}">
+            <result name="message">/messagesInfo.jsp</result>
+            <result name="main">/main.jsp</result>
+        </action>
+        
+        <!-- 用户信息处理 -->
+      	<action name="User_*" class="com.gsyoa.action.UserAction"  method="{1}">
+           <result name="message">/messagesInfo.jsp</result>
+           <result name="contact">/user/list.jsp</result>
+        </action>
+        
+        <!-- 申请信息处理 -->
+	      <action name="Apply_*" class="com.gsyoa.action.ApplyAction"  method="{1}">
+	           <result name="message">/messagesInfo.jsp</result>
+	           <result name="register">/apply/register.jsp</result>
+	           <result name="list">/apply/list.jsp</result>
+	           <result name="check">/apply/check.jsp</result>
+	           <result name="checkvoucher">/voucher/checkList.jsp</result>
+	           <result name="updatevoucher">/voucher/updateVoucher.jsp</result>
+	           <result name="update">/apply/update.jsp</result>
+	      </action>
+        
+        <!-- 员工处理 -->
+       <action name="Employee_*" class="com.gsyoa.action.EmployeeAction"  method="{1}">
+           <result name="message">/messagesInfo.jsp</result>
+            <result name="list">/employee/emplList.jsp</result>
+            <result name="success">/employee/addEmployee.jsp</result>
+       </action>
+       
+        <!-- 部门处理 -->
+       <action name="Department_*" class="com.gsyoa.action.DepartmentAction"  method="{1}">
+           <result name="message">/messagesInfo.jsp</result>
+           <result name="dplist">/department/departmentList.jsp</result>
+           <result name="list">/department/addDepartment.jsp</result> 
+           <result name="update">/department/addDepartment.jsp</result> 
+       </action>
+        <!-- 职位处理 -->
+       <action name="Position_*" class="com.gsyoa.action.PositionAction"  method="{1}">
+           <result name="message">/messagesInfo.jsp</result>
+           <result name="positionList">/position/positionList.jsp</result>
+            <result name="update">/position/addPosition.jsp</result>
+       </action>
+       
+       <!-- 职位处理 -->
+       <action name="SystemInfo_*" class="com.gsyoa.action.SystemInfoAction"  method="{1}">
+           <result name="message">/messagesInfo.jsp</result>
+       </action>
+       
+       <!-- 公告文章处理 -->
+       <action name="Article_*" class="com.gsyoa.action.ArticleAction"  method="{1}">
+           <result name="message">/messagesInfo.jsp</result>
+           <result name="list">/article/list.jsp</result>
+           <result name="send">/article/send.jsp</result>
+           <result name="show">/article/show.jsp</result>
+       </action>
+       
+      <!-- 会议处理 -->
+       <action name="Conference_*" class="com.gsyoa.action.ConferenceAction"  method="{1}">
+           <result name="message">/messagesInfo.jsp</result>
+           <result name="positionList">/conference/addConference.jsp</result>
+            <result name="list">/conference/conferenceList.jsp</result>
+            <result name="showList">/conference/showConferenceList.jsp</result>
+       </action>
+       
+       
+    </package>
+
+</struts>
